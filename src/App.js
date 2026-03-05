@@ -4,11 +4,13 @@ import Footer from './components/Footer.js';
 import Items from './components/Items.js';
 import Categories from './components/Categories.js';
 import ShowFullItem from './components/ShowFullItem.js';
+import AddProductForm from './components/AddProductForm.js';
+import AddProductBtn from './components/AddProductBtn.js';
 
 
 function App() {
   const [orders, setOrders] = useState([]); 
-  const items = [
+  const [items, setItems] = useState([
     {
       id: 1,
       title: 'Стул Серый',
@@ -49,10 +51,11 @@ function App() {
       category: 'cabinets',
       price: '179.99'
     }
-  ];
+  ])  ;
   const [currentItems, setCurrentItems] = useState(items);
   const [showFullItem, setShowFullItem] = useState(false)
   const [fullItem, setFullItem] = useState({})
+  const [addToProducts, setAddToProducts] = useState(false)
 
   const deleteOrder = (id) => {
     setOrders(prev => prev.filter(item => item.id !== id));
@@ -71,7 +74,7 @@ function App() {
   };
 
   const chooseCategory = (category) => {
-    if (category == 'all') {
+    if (category === 'all') {
       setCurrentItems(items)
     } else {
       setCurrentItems(items.filter(el => el.category === category))
@@ -83,14 +86,47 @@ function App() {
     setShowFullItem(!showFullItem)
   }
 
+  const addNewItem = (newItem) => {
+    const item = {
+      id: items.length+1, 
+      title: newItem.title,
+      category: newItem.category,
+      price: newItem.price.toString(), 
+      desc: newItem.desc,
+      img: newItem.img || 'default.jpg' 
+    };    
+    console.log('Добавляем новый товар:', item);
+
+    setItems(prevItems => {
+      const updatedItems = [...prevItems, item];
+      console.log('Обновленный массив items:', updatedItems); 
+      return updatedItems;
+    });
+    setCurrentItems(prevItems => {
+      const updatedCurrentItems = [...prevItems, item];
+      console.log('Обновленный массив currentItems:', updatedCurrentItems); 
+      return updatedCurrentItems;
+    });
+    setAddToProducts(false);
+  }
+
+  
+
+  const onAddToProducts = () => {
+    setAddToProducts(!addToProducts)
+  }
+
+
   return (
     <div className='wrapper'>
       <Header orders={orders} onDelete={deleteOrder}/>
       <Categories chooseCategory={chooseCategory}/>
       <Items onShowItem={onShowItem} items={currentItems} onAdd={addToOrder} />
-
+      <AddProductBtn onAddToProducts={onAddToProducts} addToProducts={addToProducts} />
+      {addToProducts && <AddProductForm onAddToProducts={onAddToProducts} addToProducts={addToProducts} onAddItem={addNewItem}/>}
       {showFullItem && <ShowFullItem item={fullItem} onAdd={addToOrder} onShowItem={onShowItem} />}
       <Footer />
+      <a href='#'>a</a>
     </div>
   );
 }
