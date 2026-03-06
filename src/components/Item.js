@@ -1,13 +1,14 @@
 import React from 'react'
 
-export default function Item({item, onAdd, onShowItem}) {
+export default function Item({item, onAdd, onShowItem, onDeleteFromItems}) {
     return (
       <div className='item'>
         <img src={'./img/'+item.img} onClick={() => onShowItem(item)}/>
         <h2>{item.title}</h2> 
         <p>{item.desc}</p> 
-        <b>{item.price}$</b> 
-        <div className='add-to-cart' onClick={() => onAdd(item)}>+</div> 
+        <b>{item.price}$</b>
+        <div className='delete-from-items' onClick={() => onDeleteFromItems(item)}>-</div>
+        <div className='add-to-cart' onClick={() => onAdd(item)}>+</div>
       </div>
     )
 }

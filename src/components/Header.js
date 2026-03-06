@@ -23,7 +23,17 @@ export default function Header(props) {
     let [cartOpen, setCartOpen] = useState(false)
 
     return (
-        <header>
+        <header style={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 1000,
+            width: '100%',
+            height: 50,
+            paddingTop: 20,
+            paddingBottom: 15,
+            paddingRight: 30,
+            paddingLeft: 30
+        }}>
             <div className='nav'>
                 <span className='logo'>House Staff</span>
                 <ul className='nav'>
@@ -41,7 +51,6 @@ export default function Header(props) {
                     </div>
                 )}
             </div>
-            <div className='presentation'></div>
         </header>
     )
 }

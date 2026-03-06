@@ -42,22 +42,17 @@ const AddProductForm = ({ onAddToProducts, addToProducts, onAddItem }) => {
       category: values.category,
       price: values.price.toString(),
       desc: values.desc,
-      // Временно используем заглушку для изображения
-      img: 'default.jpg' // Пока используем заглушку, пока не настроим загрузку изображений
+      img: 'default.png' 
     };
 
     console.log('Отправляем новый товар:', newItem);
     
-    // Вызываем функцию добавления товара
     onAddItem(newItem);
     
-    // Очищаем форму
     form.resetFields();
     
-    // Показываем сообщение об успехе
-    message.success('Товар успешно добавлен!');
+    message.success('Ура! Мы добавили товар в ассортимент!');
     
-    // Закрываем форму
     onAddToProducts(addToProducts);
   };
 
@@ -136,11 +131,11 @@ const AddProductForm = ({ onAddToProducts, addToProducts, onAddItem }) => {
           valuePropName="fileList" 
           getValueFromEvent={normFile}
         >
-          {/* Убираем action и добавляем beforeUpload чтобы предотвратить отправку */}
+          {}
           <Upload 
             listType="picture-card"
             maxCount={1}
-            beforeUpload={() => false} // Это предотвращает автоматическую отправку
+            beforeUpload={() => false} 
             accept="image/*"
           >
             <button

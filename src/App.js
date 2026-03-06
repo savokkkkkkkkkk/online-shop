@@ -10,7 +10,7 @@ import AddProductBtn from './components/AddProductBtn.js';
 
 function App() {
   const [orders, setOrders] = useState([]); 
-  const [items, setItems] = useState([
+  const items = [
     {
       id: 1,
       title: 'Стул Серый',
@@ -51,7 +51,7 @@ function App() {
       category: 'cabinets',
       price: '179.99'
     }
-  ])  ;
+  ] ;
   const [currentItems, setCurrentItems] = useState(items);
   const [showFullItem, setShowFullItem] = useState(false)
   const [fullItem, setFullItem] = useState({})
@@ -97,11 +97,7 @@ function App() {
     };    
     console.log('Добавляем новый товар:', item);
 
-    setItems(prevItems => {
-      const updatedItems = [...prevItems, item];
-      console.log('Обновленный массив items:', updatedItems); 
-      return updatedItems;
-    });
+
     setCurrentItems(prevItems => {
       const updatedCurrentItems = [...prevItems, item];
       console.log('Обновленный массив currentItems:', updatedCurrentItems); 
@@ -110,23 +106,27 @@ function App() {
     setAddToProducts(false);
   }
 
-  
-
   const onAddToProducts = () => {
     setAddToProducts(!addToProducts)
   }
 
+  const onDeleteFromItems = (item) => {
+    const id = item.id
+    setCurrentItems(prevItems => {
+      return prevItems.filter(item => item.id !== id);
+    });
+  }
 
   return (
     <div className='wrapper'>
       <Header orders={orders} onDelete={deleteOrder}/>
+      <div className='presentation'></div>
       <Categories chooseCategory={chooseCategory}/>
-      <Items onShowItem={onShowItem} items={currentItems} onAdd={addToOrder} />
+      <Items onShowItem={onShowItem} items={currentItems} onAdd={addToOrder} onDeleteFromItems={onDeleteFromItems}/>
       <AddProductBtn onAddToProducts={onAddToProducts} addToProducts={addToProducts} />
       {addToProducts && <AddProductForm onAddToProducts={onAddToProducts} addToProducts={addToProducts} onAddItem={addNewItem}/>}
       {showFullItem && <ShowFullItem item={fullItem} onAdd={addToOrder} onShowItem={onShowItem} />}
       <Footer />
-      <a href='#'>a</a>
     </div>
   );
 }
